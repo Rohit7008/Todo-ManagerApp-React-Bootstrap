@@ -1,13 +1,7 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { deleteTask, editTask } from "../redux/tasksSlice";
-import {
-  Button,
-  ListGroup,
-  FormControl,
-  InputGroup,
-  Modal,
-} from "react-bootstrap";
+import "./TaskList.css"; // Add this line for custom styles
 
 const TaskList = () => {
   const tasks = useSelector((state) => state.tasks);
@@ -33,50 +27,42 @@ const TaskList = () => {
   };
 
   return (
-    <div>
-      <ListGroup>
-        {tasks.map((task, index) => (
-          <ListGroup.Item
-            key={index}
-            className="d-flex justify-content-between align-items-center"
+    <div className="task-list-container">
+      {tasks.map((task, index) => (
+        <div key={index} className="task-list-item">
+          <span>{task}</span>
+          <div className="task-list-item-actions">
+            <button
+              onClick={() => handleEditTask(index)}
+              className="task-list-edit-button"
+            >
+              Edit
+            </button>
+            <button
+              onClick={() => handleDeleteTask(index)}
+              className="task-list-delete-button"
+            >
+              Delete
+            </button>
+          </div>
+        </div>
+      ))}
+      {isEditing && (
+        <div className="task-list-edit-modal">
+          <input
+            type="text"
+            value={currentTask}
+            onChange={(e) => setCurrentTask(e.target.value)}
+            className="task-list-edit-input"
+          />
+          <button
+            onClick={handleUpdateTask}
+            className="task-list-update-button"
           >
-            <span>{task}</span>
-            <div>
-              <Button
-                variant="secondary"
-                onClick={() => handleEditTask(index)}
-                className="me-2"
-              >
-                Edit
-              </Button>
-              <Button variant="danger" onClick={() => handleDeleteTask(index)}>
-                Delete
-              </Button>
-            </div>
-          </ListGroup.Item>
-        ))}
-      </ListGroup>
-      <Modal show={isEditing} onHide={() => setIsEditing(false)}>
-        <Modal.Header closeButton>
-          <Modal.Title>Edit Task</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <InputGroup>
-            <FormControl
-              value={currentTask}
-              onChange={(e) => setCurrentTask(e.target.value)}
-            />
-          </InputGroup>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={() => setIsEditing(false)}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={handleUpdateTask}>
-            Save Changes
-          </Button>
-        </Modal.Footer>
-      </Modal>
+            Update Task
+          </button>
+        </div>
+      )}
     </div>
   );
 };

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addTask } from "../redux/tasksSlice";
-import { Button, InputGroup, FormControl } from "react-bootstrap";
+import "./TaskInput.css"; // Add this line for custom styles
 
 const TaskInput = () => {
   const [task, setTask] = useState("");
@@ -15,16 +15,18 @@ const TaskInput = () => {
   };
 
   return (
-    <InputGroup className="mb-3">
-      <FormControl
-        placeholder="Enter a task"
+    <div className="task-input-container">
+      <input
+        type="text"
         value={task}
         onChange={(e) => setTask(e.target.value)}
+        placeholder="Enter a task"
+        className="task-input-field"
       />
-      <Button variant="primary" onClick={handleAddTask}>
+      <button onClick={handleAddTask} className="task-input-button">
         Add Task
-      </Button>
-    </InputGroup>
+      </button>
+    </div>
   );
 };
 

@@ -1,10 +1,15 @@
+/* index.css */
 body {
-  background-color: #f8f9fa;
-  font-family: Arial, sans-serif;
+  background-color: #f0f2f5; /* Example background color */
+  font-family: 'Roboto', sans-serif; /* Example font */
+  margin: 0;
+  padding: 0;
 }
 
 h1 {
   color: #333;
+  text-align: center;
+  margin-top: 20px;
 }
 
 .App {
